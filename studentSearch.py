@@ -76,6 +76,7 @@ def student(lastname, bus=false):
     else:
         print(student_list[[StLastName, StFirstName, Grade, Classroom, TLastName, TFirstName]])
 
+def main():
     # read in text file into dataframe
     file = "students.txt";
     cols = ["StLastName","StFirstName","Grade","Classroom","Bus","GPA","TLastName","TFirstName"];
