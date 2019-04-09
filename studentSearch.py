@@ -51,13 +51,13 @@ def main():
 
 # String, boolean ->
 # given a student lastname and option for bus, print student name
-# if bus option is set, print student bus, else print grade and classroom
+# if bus option is set, also print student bus, else print grade and classroom
 def student(lastname, bus=false):
     student_list = students_table[students_table["StLastName"] == lastname]
     if(bus):
         print(student_list[[StLastName, StFirstName, Bus]])
     else:
-        print(student_list[[StLastName, StFirstName, Grade, Classroom]])
+        print(student_list[[StLastName, StFirstName, Grade, Classroom, TLastName, TFirstName]])
 
 
 # Search entries by teacher last name
@@ -69,6 +69,12 @@ def teacher(teacher):
 
     # prints only these two columns
     print(student_list[[StLastName,StFirstName]])
+
+def grade(num):
+    student_list = students_table[students_table["Grade"] == grade]
+    print(student_list[[StLastName, StFirstName, ]])
+
+
 
 if __name__== "__main__":
   main()
