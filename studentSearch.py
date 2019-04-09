@@ -15,8 +15,8 @@ def switch(input, students_table):
                 grade(int(input[1]), "h",students_table);
             elif (input[2] == 'l' or input[2] == "low"):
                 grade(int(input[1]),'l',students_table);
-        else
-            grade(int(input[1]),"none")
+        else:
+            grade(int(input[1]),"none", students_table)
     elif ((input[0] == "t" or input[0] == "teacher")):
         teacher(input[1],students_table);
     elif ((input[0] == "b" or input[0]=="bus")):
@@ -45,7 +45,7 @@ def student(lastname, bus, students_table):
 
 # Search entries by teacher last name
 # print the last and the first name of the student.
-def teacher(teacher):
+def teacher(teacher, students_table):
 
     # filters the dataframe by students with teacher last name
     student_list = students_table.loc[students_table["TLastName"] == teacher];
@@ -56,25 +56,10 @@ def teacher(teacher):
 
 # find the bus route with matching number
 # output the student first and last name, grade and Classroom
-def bus(route):
+def bus(route, students_table):
 
-    student_list = students_table.loc[students_table["Bus"]]
+    student_list = students_table.loc[students_table["Bus"] == route]
     print(student_list[["SFirstName","SLastName","Grade","Classroom"]])
-
-# find the matching grade (within constraints if given)
-#
-
-
-
-# String, boolean ->
-# given a student lastname and option for bus, print student name
-# if bus option is set, also print student bus, else print grade and classroom
-def student(lastname, bus=false):
-    student_list = students_table[students_table["StLastName"] == lastname]
-    if(bus):
-        print(student_list[[StLastName, StFirstName, Bus]])
-    else:
-        print(student_list[[StLastName, StFirstName, Grade, Classroom, TLastName, TFirstName]])
 
 def main():
     # read in text file into dataframe
@@ -86,16 +71,39 @@ def main():
     # command line prompt
     response = input("Search: ").lower().split();
 
-    if (len(input) < 2 or len(input) > 3):
+    if (len(response) > 3):
         print ("Usage: F[lag]: <input> [F[lag]]");
     else :
         switch(response, students_table);
 
+# number, number ->
+# Takes in grade number and -1, 0, or 1 to indicate if "high", "low" or
+# no option was set.  If no option set, the first and last names of every
+# student in the given grade level is printed.  If "high" is set, information of
+# student with highest GPA of given grade level is printed.  If "low" is set,
+# information of student with lowest GPA of grade is printed.
+def grade(level, option, students_table):
+    student_list = students_table.loc[students_table["Grade"] == level]
+    if(option == "none"):
+        print(student_list[["StLastName", "StFirstName"]])
+    else:
+        if(option == "l"):
+            student = student_list.loc[student_list['GPA'].idxmin()]
+        elif(option == "h"):
+            student = student_list.loc[student+list['GPA'].idxmax()]
+        print(student_list.iloc[student])
 
-def grade(num):
-    student_list = students_table[students_table["Grade"] == grade]
-    print(student_list[[StLastName, StFirstName, ]])
+# number ->
+# given a grade level, takes all of the GPAs for that grade and prints the average
+def average(grade, students_table):
+    GPA_list = students_table.loc[students_table["Grade"] == grade, ['GPA']]
+    print('{}, {}'.format(grade, gradeGPA_list.sum()/GPA_list.size))
 
+# ->
+# prints each grade level and corresponding number of students in the grade level
+def info(students_table):
+    student_list = students_table["Grade"]
+    print(student_list.value_counts())
 
 
 if __name__== "__main__":
