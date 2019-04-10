@@ -1,5 +1,6 @@
 import pandas as pd
 import sys
+import numpy as np
 
 # switch statement because they don't have one
 def switch(input, students_table):
@@ -29,6 +30,7 @@ def switch(input, students_table):
         sys.exit();
     else :
         print ("Usage: F[lag]: <input> [F[lag]]");
+    main()
 
 
 # String, boolean ->
@@ -36,7 +38,11 @@ def switch(input, students_table):
 # if bus option is set, print student bus, else print grade and classroom
 def student(lastname, bus, students_table):
 
-    student_list = students_table.loc[students_table["StLastName"] == lastname.upper()]
+    student_list = students_table.loc[students_table["StLastName"] == lastname.upper()];
+    if (student_list.empty):
+        print("Student not found");
+        return;
+
     if(bus):
         print(student_list[["StLastName", "StFirstName","Bus"]])
     else:
@@ -49,6 +55,9 @@ def teacher(teacher, students_table):
 
     # filters the dataframe by students with teacher last name
     student_list = students_table.loc[students_table["TLastName"] == teacher];
+    if (student_list.empty):
+        print("Teacher not found");
+        return;
 
     # prints only these two columns
     print(student_list[["StLastName","StFirstName"]])
@@ -58,23 +67,12 @@ def teacher(teacher, students_table):
 # output the student first and last name, grade and Classroom
 def bus(route, students_table):
 
-    student_list = students_table.loc[students_table["Bus"] == route]
+    student_list = students_table.loc[students_table["Bus"] == route];
+    if (student_list.empty):
+        print("Bus Route not found");
+        return;
+
     print(student_list[["SFirstName","SLastName","Grade","Classroom"]])
-
-def main():
-    # read in text file into dataframe
-    file = "students.txt";
-    cols = ["StLastName","StFirstName","Grade","Classroom","Bus","GPA","TLastName","TFirstName"];
-    students_table = pd.read_csv(file, sep=",",header=None, names=cols);
-    #print(students_table)
-
-    # command line prompt
-    response = input("Search: ").lower().split();
-
-    if (len(response) > 3):
-        print ("Usage: F[lag]: <input> [F[lag]]");
-    else :
-        switch(response, students_table);
 
 # number, number ->
 # Takes in grade number and -1, 0, or 1 to indicate if "high", "low" or
@@ -84,6 +82,10 @@ def main():
 # information of student with lowest GPA of grade is printed.
 def grade(level, option, students_table):
     student_list = students_table.loc[students_table["Grade"] == level]
+    if (student_list.empty):
+        print("Grade Not Found");
+        return;
+
     if(option == "none"):
         print(student_list[["StLastName", "StFirstName"]])
     else:
@@ -97,14 +99,36 @@ def grade(level, option, students_table):
 # given a grade level, takes all of the GPAs for that grade and prints the average
 def average(grade, students_table):
     GPA_list = students_table.loc[students_table["Grade"] == grade, ['GPA']]
-    print('{}, {}'.format(grade, gradeGPA_list.sum()/GPA_list.size))
+    if (GPA_list.empty):
+        print("Grade not found");
+        return;
+    print('{}, {}'.format(grade, round(GPA_list.sum().get(0)/GPA_list.size, 2)))
 
 # ->
 # prints each grade level and corresponding number of students in the grade level
 def info(students_table):
     student_list = students_table["Grade"]
-    print(student_list.value_counts())
+    if (student_list.empty):
+        print("Info not found");
+        return;
 
+    print(student_list.value_counts().sort_index().to_frame())
+
+#main driver
+def main():
+    # read in text file into dataframe
+    file = "students.txt";
+    cols = ["StLastName","StFirstName","Grade","Classroom","Bus","GPA","TLastName","TFirstName"];
+    students_table = pd.read_csv(file, sep=",",header=None, names=cols);
+    #print(students_table)
+
+    # command line prompt
+    response = input("Search: ").lower().split();
+
+    if (len(response) > 3 or len(response) < 1):
+        print ("Usage: F[lag]: <input> [F[lag]]");
+    else :
+        switch(response, students_table);
 
 if __name__== "__main__":
   main()

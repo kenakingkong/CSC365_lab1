@@ -1,0 +1,169 @@
+// CSC 365. Spring 2019
+// Lab 1-1 test suite
+
+// TC-1
+// Tests Requirements R3, R4
+// short form command name, existing student
+// expected output: HAVIR,BOBBIE,2,108,HAMER,GAVIN
+S HAVIR
+
+// TC-2
+// Tests Requirements R3, R4
+// long form command name, existing student
+// expected output: HAVIR,BOBBIE,2,108,HAMER,GAVIN
+Student HAVIR
+
+// TC-3
+// Tests Requirements R3, R4
+// short form command name, non-existing student
+// expected output: "Student not found"
+S NEMO
+
+// TC-4
+// Tests Requirements R3,R5
+// long form command names, existing student
+// expected output:
+Student <lastname> Bus
+
+// TC-5
+// Tests Requirements R3,R5
+// short form command names, existing student
+// expected output:
+S <lastname> B
+
+// TC-6
+// Tests Requirements R3,R5
+// short form command name, non-existing student
+// expected output: "Student not found"
+S <lastname> B
+
+// TC-7
+// Tests Requirements R3, R6
+// short form command name, existing teacher
+// expected output:
+T
+
+// TC-8
+// Tests Requirements R3, R6
+// long form command name, existing teacher
+// expected output:
+Teacher
+
+// TC-9
+// Tests Requirements R3, R6
+// long form command name, existing teacher
+// expected output: "Teacher not found"
+T VonDollen
+
+// TC-10
+// Tests Requirements R3, R8
+// short form command name, existing bus route
+// expected output:
+B
+
+// TC-10
+// Tests Requirements R3, R8
+// long form command name, existing bus route
+// expected output:
+Bus
+
+// TC-11
+// Tests Requirements R3, R8
+// short form command name, non-existing bus route
+// expected output: "Bus Route not found"
+B
+
+// TC-
+// Tests Requirements: R3, R7
+// short form command name, existing grade
+// expected output: "SAELEE, DANILO\nGARTH, JOHN"
+G 1
+
+// TC-
+// Tests Requirements: R3, R7
+// short form command name, non-existing grade
+// expected output: "Grade does not exist"
+G 42
+
+// TC-
+// Tests Requirements: R3, R7
+// long form command name, existing grade
+// expected output: "SAELEE, DANILO\nGARTH, JOHN"
+Grade 1
+
+// TC-
+// Tests Requirements: R3, R9
+// short form command name, existing grade, High
+// expected output: "GARTH,JOHN,1,103,0,3.14,FALKER,ADOLPH"
+G 1 High
+
+// TC-
+// Tests Requirements: R3, R9
+// short form command name, existing grade, H
+// expected output: "GARTH,JOHN,1,103,0,3.14,FALKER,ADOLPH"
+G 1 H
+
+// TC-
+// Tests Requirements: R3, R9
+// short form command name, existing grade, Low
+// expected output: "SAELEE,DANILO,1,103,54,2.85,FALKER,ADOLPH"
+G 1 Low
+
+// TC-
+// Tests Requirements: R3, R9
+// short form command name, existing grade, L
+// expected output: "SAELEE,DANILO,1,103,54,2.85,FALKER,ADOLPH"
+G 1 L
+
+// TC-
+// Tests Requirements: R3, R9
+// short form command name, non-existing grade, Low
+// expected output: "Grade does not exist"
+G 1 Low
+
+// TC-
+// Tests Requirements: R3, R10
+// short form command name, existing grade
+// expected output: "2, 2.95"
+A 2
+
+// TC-
+// Tests Requirements: R3, R10
+// long form command name, existing grade
+// expected output: "2, 2.95"
+Average 2
+
+// TC-
+// Tests Requirements R3, R10
+// short form command name, non-existing grade
+// expected output: "Grade not found"
+A 42
+
+// TC-
+// Tests Requirements: R3, R11
+// short form command name
+// expected output:
+// 1     2
+// 2    13
+// 3     9
+// 4    15
+// 6    21
+I
+
+// TC-
+// Tests Requirements: R3, R11
+// long form command name
+// expected output:
+// 1     2
+// 2    13
+// 3     9
+// 4    15
+// 6    21
+Info
+
+
+//TC-?????
+// Tests Requirements R3, R13
+// quit command
+// expected output: program terminates
+Q
