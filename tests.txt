@@ -22,32 +22,32 @@ S NEMO
 // TC-4
 // Tests Requirements R3,R5
 // long form command names, existing student
-// expected output:
-Student <lastname> Bus
+// expected output: BEX TAMESHA 55
+Student Bex Bus
 
 // TC-5
 // Tests Requirements R3,R5
 // short form command names, existing student
-// expected output:
-S <lastname> B
+// expected output: BEX TAMESHA 55
+S BEX B
 
 // TC-6
 // Tests Requirements R3,R5
 // short form command name, non-existing student
 // expected output: "Student not found"
-S <lastname> B
+S NEMO B
 
 // TC-7
 // Tests Requirements R3, R6
 // short form command name, existing teacher
-// expected output:
-T
+// expected output: WOOLERY NOLAN \n VILARDO EMMANUEL
+T STEIB
 
 // TC-8
 // Tests Requirements R3, R6
 // long form command name, existing teacher
-// expected output:
-Teacher
+// expected output: WOOLERY NOLAN \n VILARDO EMMANUEL
+Teacher steib
 
 // TC-9
 // Tests Requirements R3, R6
@@ -59,19 +59,37 @@ T VonDollen
 // Tests Requirements R3, R8
 // short form command name, existing bus route
 // expected output:
-B
+//      SHARRI       SWEDLUND      3        107
+//     ELLIOTT     ZAPPAVIGNA      6        106
+//     NUMBERS  SAENPHIMMACHA      6        111
+//         WAN         BOYTER      6        102
+//      BUSTER         KOZOLA      2        108
+//     DEWAYNE      DEMARTINI      6        102
+//     TAMESHA            BEX      4        105
+//        LEON          WERST      6        111
+//        TAMA         LAMKIN      6        111
+B 55
 
 // TC-10
 // Tests Requirements R3, R8
 // long form command name, existing bus route
 // expected output:
-Bus
+//      SHARRI       SWEDLUND      3        107
+//     ELLIOTT     ZAPPAVIGNA      6        106
+//     NUMBERS  SAENPHIMMACHA      6        111
+//         WAN         BOYTER      6        102
+//      BUSTER         KOZOLA      2        108
+//     DEWAYNE      DEMARTINI      6        102
+//     TAMESHA            BEX      4        105
+//        LEON          WERST      6        111
+//        TAMA         LAMKIN      6        111
+Bus 55
 
 // TC-11
 // Tests Requirements R3, R8
 // short form command name, non-existing bus route
 // expected output: "Bus Route not found"
-B
+B 1
 
 // TC-
 // Tests Requirements: R3, R7
