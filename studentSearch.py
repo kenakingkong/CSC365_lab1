@@ -54,13 +54,13 @@ def student(lastname, bus, students_table):
 def teacher(teacher, students_table):
 
     # filters the dataframe by students with teacher last name
-    student_list = students_table.loc[students_table["TLastName"] == teacher];
+    student_list = students_table.loc[students_table["TLastName"] == teacher.upper()];
     if (student_list.empty):
         print("Teacher not found");
         return;
 
     # prints only these two columns
-    print(student_list[["StLastName","StFirstName"]])
+    print(student_list[["StLastName","StFirstName"]].to_string(index=False))
 
 
 # find the bus route with matching number
@@ -72,7 +72,7 @@ def bus(route, students_table):
         print("Bus Route not found");
         return;
 
-    print(student_list[["SFirstName","SLastName","Grade","Classroom"]])
+    print(student_list[["StFirstName","StLastName","Grade","Classroom"]])
 
 # number, number ->
 # Takes in grade number and -1, 0, or 1 to indicate if "high", "low" or
