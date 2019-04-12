@@ -70,7 +70,7 @@ T VonDollen
 //        TAMA         LAMKIN      6        111
 B 55
 
-// TC-10
+// TC-11
 // Tests Requirements R3, R8
 // long form command name, existing bus route
 // expected output:
@@ -85,25 +85,25 @@ B 55
 //        TAMA         LAMKIN      6        111
 Bus 55
 
-// TC-11
+// TC-12
 // Tests Requirements R3, R8
 // short form command name, non-existing bus route
 // expected output: "Bus Route not found"
 B 1
 
-// TC-12
+// TC-13
 // Tests Requirements: R3, R7
 // short form command name, existing grade
 // expected output: "SAELEE, DANILO\nGARTH, JOHN"
 G 1
 
-// TC-13
+// TC-14
 // Tests Requirements: R3, R7
 // short form command name, non-existing grade
 // expected output: "Grade does not exist"
 G 42
 
-// TC-14
+// TC-15
 // Tests Requirements: R3, R7
 // long form command name, existing grade
 // expected output: "SAELEE, DANILO\nGARTH, JOHN"
@@ -136,8 +136,8 @@ G 1 L
 // TC-19
 // Tests Requirements: R3, R9
 // short form command name, non-existing grade, Low
-// expected output: "Grade does not exist"
-G 1 Low
+// expected output: "Grade Not Found"
+G 42 Low
 
 // TC-20
 // Tests Requirements: R3, R10

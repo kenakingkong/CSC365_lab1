@@ -1,0 +1,148 @@
+Search: S HAVIR
+   StLastName StFirstName  Grade  Classroom
+19      HAVIR      BOBBIE      2        108
+
+Search: Student HAVIR
+   StLastName StFirstName  Grade  Classroom
+19      HAVIR      BOBBIE      2        108
+
+Search: S NEMO
+Student not found
+
+Search: Student Bex Bus
+   StLastName StFirstName  Bus
+52        BEX     TAMESHA   55
+
+Search: S BEX B
+   StLastName StFirstName  Bus
+52        BEX     TAMESHA   55
+
+Search: S NEMO B
+Student not found
+
+Search: T STEIB
+StLastName StFirstName
+   WOOLERY       NOLAN
+   VILARDO    EMMANUEL
+
+Search: Teacher steib
+StLastName StFirstName
+   WOOLERY       NOLAN
+   VILARDO    EMMANUEL
+
+Search: T VonDollen
+Teacher not found
+
+Search: B 55
+   StFirstName     StLastName  Grade  Classroom
+12      SHARRI       SWEDLUND      3        107
+13     ELLIOTT     ZAPPAVIGNA      6        106
+22     NUMBERS  SAENPHIMMACHA      6        111
+24         WAN         BOYTER      6        102
+34      BUSTER         KOZOLA      2        108
+45     DEWAYNE      DEMARTINI      6        102
+52     TAMESHA            BEX      4        105
+55        LEON          WERST      6        111
+56        TAMA         LAMKIN      6        111
+
+Search: Bus 55
+   StFirstName     StLastName  Grade  Classroom
+12      SHARRI       SWEDLUND      3        107
+13     ELLIOTT     ZAPPAVIGNA      6        106
+22     NUMBERS  SAENPHIMMACHA      6        111
+24         WAN         BOYTER      6        102
+34      BUSTER         KOZOLA      2        108
+45     DEWAYNE      DEMARTINI      6        102
+52     TAMESHA            BEX      4        105
+55        LEON          WERST      6        111
+56        TAMA         LAMKIN      6        111
+
+Search: B 1
+Bus Route not found
+
+Search: G 1
+   StLastName StFirstName
+38     SAELEE      DANILO
+46      GARTH        JOHN
+
+Search: G 42
+Grade Not Found
+
+Search: Grade 1
+   StLastName StFirstName
+38     SAELEE      DANILO
+46      GARTH        JOHN
+
+Search: G 1 High
+StLastName      GARTH
+StFirstName      JOHN
+Grade               1
+Classroom         103
+Bus                 0
+GPA              3.14
+TLastName      FALKER
+TFirstName     ADOLPH
+Name: 46, dtype: object
+
+Search: G 1 H
+StLastName      GARTH
+StFirstName      JOHN
+Grade               1
+Classroom         103
+Bus                 0
+GPA              3.14
+TLastName      FALKER
+TFirstName     ADOLPH
+Name: 46, dtype: object
+
+Search: G 1 Low
+StLastName     SAELEE
+StFirstName    DANILO
+Grade               1
+Classroom         103
+Bus                54
+GPA              2.85
+TLastName      FALKER
+TFirstName     ADOLPH
+Name: 38, dtype: object
+
+Search: G 1 L
+StLastName     SAELEE
+StFirstName    DANILO
+Grade               1
+Classroom         103
+Bus                54
+GPA              2.85
+TLastName      FALKER
+TFirstName     ADOLPH
+Name: 38, dtype: object
+
+Search: G 42 Low
+Grade Not Found
+
+Search: A 2
+2, 2.95
+
+Search: Average 2
+2, 2.95
+
+Search: A 42
+Grade not found
+
+Search: I
+   Grade
+1      2
+2     13
+3      9
+4     15
+6     21
+
+Search: Info
+   Grade
+1      2
+2     13
+3      9
+4     15
+6     21
+
+Search: Q

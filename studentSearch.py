@@ -30,6 +30,7 @@ def switch(input, students_table):
         sys.exit();
     else :
         print ("Usage: F[lag]: <input> [F[lag]]");
+    print("")
     main()
 
 
@@ -90,10 +91,10 @@ def grade(level, option, students_table):
         print(student_list[["StLastName", "StFirstName"]])
     else:
         if(option == "l"):
-            student = student_list.loc[student_list['GPA'].idxmin()]
+            student = students_table.iloc[student_list['GPA'].idxmin()]
         elif(option == "h"):
-            student = student_list.loc[student+list['GPA'].idxmax()]
-        print(student_list.iloc[student])
+            student = students_table.iloc[student_list['GPA'].idxmax()]
+        print(student)
 
 # number ->
 # given a grade level, takes all of the GPAs for that grade and prints the average
