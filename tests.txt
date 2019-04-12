@@ -73,73 +73,73 @@ Bus
 // expected output: "Bus Route not found"
 B
 
-// TC-
+// TC-12
 // Tests Requirements: R3, R7
 // short form command name, existing grade
 // expected output: "SAELEE, DANILO\nGARTH, JOHN"
 G 1
 
-// TC-
+// TC-13
 // Tests Requirements: R3, R7
 // short form command name, non-existing grade
 // expected output: "Grade does not exist"
 G 42
 
-// TC-
+// TC-14
 // Tests Requirements: R3, R7
 // long form command name, existing grade
 // expected output: "SAELEE, DANILO\nGARTH, JOHN"
 Grade 1
 
-// TC-
+// TC-15
 // Tests Requirements: R3, R9
 // short form command name, existing grade, High
 // expected output: "GARTH,JOHN,1,103,0,3.14,FALKER,ADOLPH"
 G 1 High
 
-// TC-
+// TC-16
 // Tests Requirements: R3, R9
 // short form command name, existing grade, H
 // expected output: "GARTH,JOHN,1,103,0,3.14,FALKER,ADOLPH"
 G 1 H
 
-// TC-
+// TC-17
 // Tests Requirements: R3, R9
 // short form command name, existing grade, Low
 // expected output: "SAELEE,DANILO,1,103,54,2.85,FALKER,ADOLPH"
 G 1 Low
 
-// TC-
+// TC-18
 // Tests Requirements: R3, R9
 // short form command name, existing grade, L
 // expected output: "SAELEE,DANILO,1,103,54,2.85,FALKER,ADOLPH"
 G 1 L
 
-// TC-
+// TC-19
 // Tests Requirements: R3, R9
 // short form command name, non-existing grade, Low
 // expected output: "Grade does not exist"
 G 1 Low
 
-// TC-
+// TC-20
 // Tests Requirements: R3, R10
 // short form command name, existing grade
 // expected output: "2, 2.95"
 A 2
 
-// TC-
+// TC-21
 // Tests Requirements: R3, R10
 // long form command name, existing grade
 // expected output: "2, 2.95"
 Average 2
 
-// TC-
+// TC-22
 // Tests Requirements R3, R10
 // short form command name, non-existing grade
 // expected output: "Grade not found"
 A 42
 
-// TC-
+// TC-23
 // Tests Requirements: R3, R11
 // short form command name
 // expected output:
@@ -150,7 +150,7 @@ A 42
 // 6    21
 I
 
-// TC-
+// TC-24
 // Tests Requirements: R3, R11
 // long form command name
 // expected output:
@@ -162,7 +162,7 @@ I
 Info
 
 
-//TC-?????
+//TC-25
 // Tests Requirements R3, R13
 // quit command
 // expected output: program terminates
