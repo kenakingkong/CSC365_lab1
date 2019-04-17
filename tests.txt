@@ -244,3 +244,186 @@ Enrollment
 // 111          9
 // 112          8
 E
+
+
+
+/*ANALYTICS SECTION*/
+
+// TC -
+// Test Requirements: R5
+// access advanced search command
+// expected output
+// ***ADVANCED SEARCH***
+// Usage (case sensitive):
+//  1. Grade|Teacher|Bus <grade |Teacher last name | bus route>
+//   Get the Average GPA by specified Grade, Teacher or Bus Route
+//2. Grade|Teacher|Bus ALL SORT
+//   Get Average GPAs of each Grade, Teacher or Bus sorted descendingly by GPA or by category by default
+// 3. ALL
+//    Get all GPAs sorted descendingly
+// 4. EXIT
+//   Return to regular commands
+advanced
+
+// TC -
+// Test Requirements: R5
+// function: (1) get average gpa of grade
+// command grade, grade number existing
+// expected output: 2.946....
+Grade 2
+
+// TC -
+// Test Requirements: R5
+// function: (1) get average gpa of grade
+// command grade, grade number non-existing
+// expected output: 9 not found
+Grade 9
+
+// TC -
+// Test Requirements: R5
+// function: (1) get average gpa of teacher
+// command teacher, teacher last name existing
+// expected output: 3.0142857142857147
+Teacher FARFARD
+
+// TC -
+// Test Requirements: R5
+// function: (1) get average gpa of teacher
+// command teacher, teacher last name non-existing
+// expected output: VONDOLLEN not found
+Teacher VONDOLLEN
+
+// TC -
+// Test Requirements: R5
+// function: (1) get average gpa of bus routes
+// command bus, bus number existing
+// expected output: 2.885
+Bus 52
+
+// TC -
+// Test Requirements: R5
+// function: (1) get average gpa of bus routes
+// command bus, bus number non existing
+// expected output: 150 not Found
+Bus 150
+
+// TC -
+// Test Requirements: R5
+// function: (2) get average gpa of each grade, sorted by grade level
+// command grade, all
+// expected output:
+// Grade
+// 1    2.995000
+// 2    2.946154
+// 3    3.048889
+// 4    2.951333
+// 6    2.977143
+Grade ALL
+
+// TC -
+// Test Requirements: R5
+// function: (2) get average gpa of each grade, sorted by GPA descending
+// command grade, all, sort
+// expected output:
+// Grade
+// 3    3.048889
+// 1    2.995000
+// 6    2.977143
+// 4    2.951333
+// 2    2.946154
+Grade ALL SORT
+
+// TC -
+// Test Requirements: R5
+// function (2) get average gpa of each teacher, sorted by teacher names
+// command Teacher, all
+// expected output:
+// TLastName
+// ALPERT        3.170000
+// BODZIONY      3.090000
+// CHIONCHIO     2.985000
+// COOL          2.910000
+// FAFARD        3.014286
+// FALKER        2.995000
+// GAMBREL       2.960000
+// HAMER         2.954545
+// HANTZ         2.913333
+// KERBS         2.976000
+// NISTENDIRK    2.962222
+// STEIB         2.900000
+Teacher ALL
+
+// TC -
+// Test Requirements: R5
+// function (2) get average gpa of each teacher, sorted by gpa
+// command Teacher, all, sort
+// expected output:
+// TLastName
+// ALPERT        3.170000
+// BODZIONY      3.090000
+// FAFARD        3.014286
+// FALKER        2.995000
+// CHIONCHIO     2.985000
+// KERBS         2.976000
+// NISTENDIRK    2.962222
+// GAMBREL       2.960000
+// HAMER         2.954545
+// HANTZ         2.913333
+// COOL          2.910000
+// STEIB         2.900000
+Teacher ALL SORT
+
+// Test Requirements: R5
+// function (2) get average gpa of each bus, sorted by bus number
+// command bus, all
+// expected output:
+// Bus
+// 0     2.952500
+// 51    3.020000
+// 52    2.885000
+// 53    3.055556
+// 54    2.941667
+// 55    3.036667
+// 56    2.921667
+Bus ALL
+
+// Test Requirements: R5
+// function (2) get average gpa of each bus, sorted by gpa
+// command bus, all, sort
+// expected output:
+// Bus
+// 53    3.055556
+// 55    3.036667
+// 51    3.020000
+// 0     2.952500
+// 54    2.941667
+// 56    2.921667
+// 52    2.885000
+Bus ALL SORT
+
+// TC -
+// Test Requirements: R5
+// function(3): get all records sorted by gpa descending
+// command ALL
+// expected output:
+// StLastName StFirstName  Grade  Classroom  Bus   GPA   TLastName TFirstName
+// 2        SWEDLUND      SHARRI      3        107   55  3.24      FAFARD      ROCIO
+// 27         LAMKIN        TAMA      6        111   55  3.23  NISTENDIRK      NANCY
+// 29     THEUNISSEN       GRACE      3        110   54  3.23      ALPERT   JONATHAN
+// 40       WICINSKY      TERESE      2        108   53  3.22       HAMER      GAVIN
+// 26          WERST        LEON      6        111   55  3.22  NISTENDIRK      NANCY
+// 7     SCHOENECKER      PHUONG      6        109    0  3.15     GAMBREL        JAE
+// 47     ZAPPAVIGNA     ELLIOTT      6        106   55  3.15    BODZIONY        LUZ
+// .... and the rest of the records that I didn't want to put
+ALL
+
+// TC -
+// Test Requirements: R5
+// function (4) exit advanced search back to regular search
+// command exit
+// expected output:
+//
+// *** LEAVING ADVANCED SEARCH ***
+//
+// Search:
+EXIT

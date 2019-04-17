@@ -10,7 +10,7 @@ def get_user_input(students_table, teachers_table):
 # switch statement because they don't have one
 def switch(input, students_table, teachers_table):
 
-    if (len(response) > 3 or len(response) < 1):
+    if (len(input) > 3 or len(input) < 1):
         print ("Usage: F[lag]: <input> [F[lag]]");
     elif (input[0] == "s" or input[0] == "student"):
         if (len(input) == 3 and (input[2] == "b" or input[2]=="bus")):
@@ -52,7 +52,7 @@ def switch(input, students_table, teachers_table):
         print("1. Grade|Teacher|Bus <grade |Teacher last name | bus route>\n   Get the Average GPA by specified Grade, Teacher or Bus Route")
         print("2. Grade|Teacher|Bus ALL SORT\n   Get Average GPAs of each Grade, Teacher or Bus sorted descendingly by GPA or by category by default");
         print("3. ALL \n   Get all GPAs sorted descendingly");
-        print("4. EXIT\n   Return to regular commands");
+        print("4. EXIT\n   Return to regular commands\n");
         get_advanced_input(students_table, teachers_table);
     elif (input[0] == 'q' or input[0] == 'quit'):
         sys.exit();
@@ -186,7 +186,7 @@ def advanced_switch(response, students_table, teachers_table):
     # merged the two tables
     table = students_table.merge(teachers_table)
 
-    if (len(response) > 4 or len(response) < 2):
+    if (len(response) > 4 or len(response) < 1):
         print ("invalid commands");
         # handle options 3 & 4
     elif (len(response) == 1):
@@ -217,14 +217,20 @@ def advanced_switch(response, students_table, teachers_table):
 # alter to accept grade, teacher ,bus route
 # returns the average of all students in given Grade, Bus Route or Teacher
 def averageBy(column, input, table):
-    if (column == "Grade" or column == "Bus"):
-        input = int(input);
     if (column == "Teacher"):
         column = "TLastName";
+    if (column not in table.columns):
+        print("Advanced Search is Case Sensitive, try again!");
+        return;
+
+    if (column == "Grade" or column == "Bus"):
+        input = int(input);
+
     GPA_list = table.loc[table[column] == input, ['GPA']]
     if (GPA_list.empty):
-        print(input + " not found");
+        print(str(input) + " not found");
         return;
+
     #print('{}, {}'.format(grade, round(GPA_list.sum().get(0)/GPA_list.size, 2)))
     print(GPA_list.mean()[0])
 
@@ -236,6 +242,10 @@ def averages(column, tables, sortBy=False):
     if (column == "Teacher"):
         column = "TLastName";
 
+    if (column not in tables.columns):
+        print("Advanced Search is Case Sensitive, try again!");
+        return;
+
     if (sortBy):
         result = tables.groupby(column).GPA.mean().sort_values(ascending=False);
     else:
@@ -243,8 +253,8 @@ def averages(column, tables, sortBy=False):
     print(result);
 
 # return every single GPA
-def overallGPA(students_table, teachers_table):
-    print(tables.sort_values(by=["GPA"], ascending=False))
+def overallGPA(table):
+    print(table.sort_values(by=["GPA"], ascending=False))
 
 #main driver
 def main():
@@ -264,7 +274,8 @@ def main():
     # G[rade] <grade #> [S[tudent] [[H]igh|[L]ow]]|T[eacher]
     # E[nrollment]
     # prompt function
-    print("Usage: \n see project spec \n <advanced> for advanced search for analytics")
+    print("\n***STUDENT SEARCH PROGRAM***\n")
+    print("\nUsage: \n see project spec \n <advanced> for advanced search for analytics\n")
     get_user_input(students_table, teachers_table);
 
 if __name__== "__main__":
