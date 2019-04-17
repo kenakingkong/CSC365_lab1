@@ -179,9 +179,68 @@ I
 // 6    21
 Info
 
-
 //TC-25
 // Tests Requirements R3, R13
-// quit command
+// long form quit command
+// expected output: program terminates
+Quit
+
+//TC-26
+// Tests Requirements R3, R13
+// short form quit command
 // expected output: program terminates
 Q
+
+// TC-
+// Tests Requirements: R3, NR3
+// long form grade command, long form teacher option
+// expected output:
+// COOL REUBEN
+// HANTZ JED
+// CHIONCHIO PERLA
+Grade 4 Teachers
+
+// TC-
+// Tests Requirements: R3, NR3
+// long form grade command, short form teacher option
+// expected output:
+// COOL REUBEN
+// HANTZ JED
+// CHIONCHIO PERLA
+Grade 4 T
+
+// TC-
+// Tests Requirements: R3, NR4
+// long form enrollment command
+// expected output:
+// 101          1
+// 102          5
+// 103          2
+// 104          2
+// 105          6
+// 106          2
+// 107          7
+// 108         11
+// 109          5
+// 110          2
+// 111          9
+// 112          8
+Enrollment
+
+// TC-
+// Tests Requirements: R3, NR4
+// short form enrollment command
+// expected output:
+// 101          1
+// 102          5
+// 103          2
+// 104          2
+// 105          6
+// 106          2
+// 107          7
+// 108         11
+// 109          5
+// 110          2
+// 111          9
+// 112          8
+E

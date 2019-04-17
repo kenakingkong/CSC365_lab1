@@ -18,7 +18,7 @@ def get_user_input(students_table, teachers_table):
 # E[nrollment]
 
 # switch statement because they don't have one
-def switch(input, students_table):
+def switch(input, students_table, teachers_table):
 
     if (input[0] == "s" or input[0] == "student"):
         if (len(input) == 3 and (input[2] == "b" or input[2]=="bus")):
@@ -26,13 +26,16 @@ def switch(input, students_table):
         else:
             student(input[1],False, students_table);
     elif (input[0] == "g" or input[0]=="grade"):
-        if (len(input) == 3):
-            if (input[2] == "h" or input[2]=="high"):
+        if (len(input) == 4):
+            if (input[3] == "h" or input[3]=="high"):
                 grade(int(input[1]), "h",students_table);
-            elif (input[2] == 'l' or input[2] == "low"):
+            elif (input[3] == 'l' or input[3] == "low"):
                 grade(int(input[1]),'l',students_table);
         else:
-            grade(int(input[1]),"none", students_table)
+            if(input[2] == 's' or input[2] == 'students'):
+                grade(int(input[1]),"none", students_table, teachers_table)
+            elif(input[2] == 't' or input[2] == 'teachers'):
+                grade(int(input[1]), "none", students_table, teachers_table, True)
     elif ((input[0] == "t" or input[0] == "teacher")):
         teacher(input[1],students_table);
     elif ((input[0] == "b" or input[0]=="bus")):
@@ -45,10 +48,14 @@ def switch(input, students_table):
         if (len(input) == 3):
             if (input[2]=="s" or input[2]=="student"):
                 classroom(int(input[1]), 's', students_table);
-            else (input[2]=="t" or input[2]=="teacher"):
-                classroom(int(input[2]), 't', teachers_table);
+            elif (input[2]=="t" or input[2]=="teacher"):
+                classroom(int(input[2]), 't', students_table, teachers_table);
         else:
             print ("Usage: F[lag]: <input> [F[lag]]");
+    elif (input[0]=='e' or input[0]=="enrollment"):
+        enrollment(students_table)
+    elif (input[0]=="analytics"):
+        get_analytics_input(students_table, teachers_table);
     elif (input[0] == 'q' or input[0] == 'quit'):
         sys.exit();
     else :
@@ -102,29 +109,30 @@ def bus(route, students_table):
     print(student_list[["StFirstName","StLastName","Grade","Classroom"]])
 
 # number, number ->
-# Takes in grade number and -1, 0, or 1 to indicate if "high", "low" or
-# no option was set.  If no option set, the first and last names of every
+# Takes in grade number and "high", "low", or "none" if no option was set.
+# If no option set, the first and last names of every
 # student in the given grade level is printed.  If "high" is set, information of
 # student with highest GPA of given grade level is printed.  If "low" is set,
 # information of student with lowest GPA of grade is printed.
-def grade(level, h_l, given_table):
-    given_list = given_table.loc[students_table["Grade"] == level]
-    if (given_list.empty):
+def grade(level, h_l, student_table, teacher_table, teacher=False):
+    student_list = student_table.loc[student_table["Grade"] == level]
+    if (student_list.empty):
         print("Grade Not Found");
         return;
-    if 'Bus' in given_list.columns:
+    if(teacher):
+        class_list = student_list.Classroom.unique()
+        teacher_list = teacher_table.loc[teacher_table["Classroom"].isin(class_list)]
+        print(teacher_list[["TLastName", "TFirstName"]])
+    else:
         if(h_l == "none"):
             print(given_list[["StLastName", "StFirstName"]])
         else:
             if(option == "l"):
-                student = students_table.iloc[student_list['GPA'].idxmin()]
+                student = student_table.iloc[student_list['GPA'].idxmin()]
             elif(option == "h"):
-                student = students_table.iloc[student_list['GPA'].idxmax()]
+                student = student_table.iloc[student_list['GPA'].idxmax()]
             print(student)
-    else:
-        print(given_list[["TLastName", "TFirstName"]])
 
-# number ->
 # given a grade level, takes all of the GPAs for that grade and prints the average
 def average(grade, students_table):
     GPA_list = students_table.loc[students_table["Grade"] == grade, ['GPA']]
@@ -152,7 +160,7 @@ def classroom(room, option, table):
     else :
         if (option == "s"): #table = students_table
             print(new_list[["StLastName", "StFirstName"]]);
-        else if (option == "t"): # table = teacher_table
+        elif (option == "t"): # table = teacher_table
             print(new_list[["TLastName","TFirstName"]]);
         else :
             print ("Usage: F[lag]: <input> [F[lag]]");
@@ -167,6 +175,64 @@ def enrollment(students_table):
         return
     print(class_list.value_counts().sort_index().to_frame())
 
+
+
+''' ANALYTICS PORTION '''
+
+# pass analytics input into switch
+def get_analytics_input(students_table, teachers_table):
+    print("***ANALYTICS***");
+    print("Usage:");
+    print("1. GPA G|T|B <input>\n   Get the Average GPA by Grade, Teacher or Bus Route")
+    print("2. GPA all G|T|B [G|T|B] \n   Get Average GPAs by Grade, Teacher or Bus Route optionally sorted by Grade Teacher or Bus, Route");
+    print("3. GPA all \n   Get all GPAs sorted by Grade, Teacher or Bus Route")
+    response = input("Search: ").lower().split();
+
+    if (len(response) > 4 or len(response) < 2):
+        print ("Usage: GPA F[lag]: <input> [F[lag]]");
+    else :
+        # pass in input without "GPA"
+        analytics_switch(response[1:], students_table, teachers_table);
+
+def analytics_switch(response, students_table, teachers_table):
+    # currently testing the
+
+    '''
+    if (response[0] == "all"):
+        if (response[1]):
+            averages(-----);
+        else:
+            overallGPA(students_table, teachers_table);
+    '''
+
+
+# alter to accept grade, teacher ,bus route
+# returns the average of all students in given Grade, Bus Route or Teacher
+def average(column, input,  students_table):
+
+
+    GPA_list = students_table.loc[students_table[calumn] == input, ['GPA']]
+    if (GPA_list.empty):
+        print("Grade not found");
+        return;
+    print('{}, {}'.format(grade, round(GPA_list.sum().get(0)/GPA_list.size, 2)))
+
+
+# get average by teacher or bus routes
+def averageBy(students_table, teachers_table):
+    pass;
+
+# return the average gpa of all grades, teachers OR bus routes
+# optional sort by grade, teacher or bus routes
+# default will be its own
+def averages(students_table, teachers_table, option, sortBy):
+    # sort by teachers
+    if (sortBy == "t"):
+        pass;
+
+# return every single GPA
+def overallGPA(students_table, teachers_table):
+    pass;
 
 #main driver
 def main():
