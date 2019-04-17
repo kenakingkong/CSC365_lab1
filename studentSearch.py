@@ -4,23 +4,15 @@ import numpy as np
 
 # pass input into switch
 def get_user_input(students_table, teachers_table):
-    # command line prompt
     response = input("Search: ").lower().split();
-
-    if (len(response) > 3 or len(response) < 1):
-        print ("Usage: F[lag]: <input> [F[lag]]");
-    else :
-        switch(response, students_table, teachers_table);
-
-# new commands:
-# C[lass] <class #> S[tudent]|T[eacher]
-# G[rade] <grade #> [S[tudent] [[H]igh|[L]ow]]|T[eacher]
-# E[nrollment]
+    switch(response, students_table, teachers_table);
 
 # switch statement because they don't have one
 def switch(input, students_table, teachers_table):
 
-    if (input[0] == "s" or input[0] == "student"):
+    if (len(response) > 3 or len(response) < 1):
+        print ("Usage: F[lag]: <input> [F[lag]]");
+    elif (input[0] == "s" or input[0] == "student"):
         if (len(input) == 3 and (input[2] == "b" or input[2]=="bus")):
             student(input[1], True, students_table);
         else:
@@ -54,8 +46,14 @@ def switch(input, students_table, teachers_table):
             print ("Usage: F[lag]: <input> [F[lag]]");
     elif (input[0]=='e' or input[0]=="enrollment"):
         enrollment(students_table)
-    elif (input[0]=="analytics"):
-        get_analytics_input(students_table, teachers_table);
+    elif (input[0]=="advanced"):
+        print("\n***ADVANCED SEARCH***\n");
+        print("Usage (case sensitive):");
+        print("1. Grade|Teacher|Bus <grade |Teacher last name | bus route>\n   Get the Average GPA by specified Grade, Teacher or Bus Route")
+        print("2. Grade|Teacher|Bus ALL SORT\n   Get Average GPAs of each Grade, Teacher or Bus sorted descendingly by GPA or by category by default");
+        print("3. ALL \n   Get all GPAs sorted descendingly");
+        print("4. EXIT\n   Return to regular commands");
+        get_advanced_input(students_table, teachers_table);
     elif (input[0] == 'q' or input[0] == 'quit'):
         sys.exit();
     else :
@@ -139,7 +137,8 @@ def average(grade, students_table):
     if (GPA_list.empty):
         print("Grade not found");
         return;
-    print('{}, {}'.format(grade, round(GPA_list.sum().get(0)/GPA_list.size, 2)))
+    #print('{}, {}'.format(grade, round(GPA_list.sum().get(0)/GPA_list.size, 2)))
+    print(GPA_list.mean()[0])
 
 # ->
 # prints each grade level and corresponding number of students in the grade level
@@ -176,63 +175,76 @@ def enrollment(students_table):
     print(class_list.value_counts().sort_index().to_frame())
 
 
-
-''' ANALYTICS PORTION '''
+''' ANALYTICS PART '''
 
 # pass analytics input into switch
-def get_analytics_input(students_table, teachers_table):
-    print("***ANALYTICS***");
-    print("Usage:");
-    print("1. GPA G|T|B <input>\n   Get the Average GPA by Grade, Teacher or Bus Route")
-    print("2. GPA all G|T|B [G|T|B] \n   Get Average GPAs by Grade, Teacher or Bus Route optionally sorted by Grade Teacher or Bus, Route");
-    print("3. GPA all \n   Get all GPAs sorted by Grade, Teacher or Bus Route")
-    response = input("Search: ").lower().split();
+def get_advanced_input(students_table, teachers_table):
+    response = input("Advanced Search: ").split();
+    advanced_switch(response, students_table, teachers_table);
+
+def advanced_switch(response, students_table, teachers_table):
+    # merged the two tables
+    table = students_table.merge(teachers_table)
 
     if (len(response) > 4 or len(response) < 2):
-        print ("Usage: GPA F[lag]: <input> [F[lag]]");
-    else :
-        # pass in input without "GPA"
-        analytics_switch(response[1:], students_table, teachers_table);
+        print ("invalid commands");
+        # handle options 3 & 4
+    elif (len(response) == 1):
+        if (response[0] == "EXIT"):
+            print("\n *** LEAVING ADVANCED SEARCH ***\n");
+            get_user_input(students_table, teachers_table);
 
-def analytics_switch(response, students_table, teachers_table):
-    # currently testing the
-
-    '''
-    if (response[0] == "all"):
-        if (response[1]):
-            averages(-----);
+        elif (response[0]=="ALL"):
+            overallGPA(table);
+    # handle options 1 and 2
+    elif (len(response) == 2 ):
+        if (response[1]=="ALL"):
+            averages(response[0], table);
         else:
-            overallGPA(students_table, teachers_table);
-    '''
+            averageBy(response[0],response[1],table);
+    # handle case 2
+    elif (len(response) == 3):
+        averages(response[0], table, True);
+    # improper input
+    else:
+        print("invalid input!");
+
+    # reprompt until quit
+    get_advanced_input(students_table, teachers_table);
+
 
 
 # alter to accept grade, teacher ,bus route
 # returns the average of all students in given Grade, Bus Route or Teacher
-def average(column, input,  students_table):
-
-
-    GPA_list = students_table.loc[students_table[calumn] == input, ['GPA']]
+def averageBy(column, input, table):
+    if (column == "Grade" or column == "Bus"):
+        input = int(input);
+    if (column == "Teacher"):
+        column = "TLastName";
+    GPA_list = table.loc[table[column] == input, ['GPA']]
     if (GPA_list.empty):
-        print("Grade not found");
+        print(input + " not found");
         return;
-    print('{}, {}'.format(grade, round(GPA_list.sum().get(0)/GPA_list.size, 2)))
+    #print('{}, {}'.format(grade, round(GPA_list.sum().get(0)/GPA_list.size, 2)))
+    print(GPA_list.mean()[0])
 
-
-# get average by teacher or bus routes
-def averageBy(students_table, teachers_table):
-    pass;
 
 # return the average gpa of all grades, teachers OR bus routes
 # optional sort by grade, teacher or bus routes
 # default will be its own
-def averages(students_table, teachers_table, option, sortBy):
-    # sort by teachers
-    if (sortBy == "t"):
-        pass;
+def averages(column, tables, sortBy=False):
+    if (column == "Teacher"):
+        column = "TLastName";
+
+    if (sortBy):
+        result = tables.groupby(column).GPA.mean().sort_values(ascending=False);
+    else:
+        result = tables.groupby(column).GPA.mean();
+    print(result);
 
 # return every single GPA
 def overallGPA(students_table, teachers_table):
-    pass;
+    print(tables.sort_values(by=["GPA"], ascending=False))
 
 #main driver
 def main():
@@ -247,7 +259,12 @@ def main():
     teacher_cols =["TLastName", "TFirstName", "Classroom"];
     teachers_table = pd.read_csv(file, sep=",",header=None, names=teacher_cols)
 
+    # new commands:
+    # C[lass] <class #> S[tudent]|T[eacher]
+    # G[rade] <grade #> [S[tudent] [[H]igh|[L]ow]]|T[eacher]
+    # E[nrollment]
     # prompt function
+    print("Usage: \n see project spec \n <advanced> for advanced search for analytics")
     get_user_input(students_table, teachers_table);
 
 if __name__== "__main__":
