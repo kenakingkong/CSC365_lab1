@@ -107,13 +107,13 @@ G 1 s
 // Tests Requirements: R3, R7
 // short form command name, non-existing grade
 // expected output: "Grade does not exist"
-G 42
+G 42 h
 
 // TC-15
 // Tests Requirements: R3, R7
 // long form command name, existing grade
-// expected output: "SAELEE, DANILO\nGARTH, JOHN"
-Grade 1
+// expected output:"SAELEE,DANILO,1,103,54,2.85,FALKER,ADOLPH"
+Grade 1 l
 
 // TC-15
 // Tests Requirements: R3, R9
@@ -185,18 +185,6 @@ I
 // 6    21
 Info
 
-//TC-25
-// Tests Requirements R3, R13
-// long form quit command
-// expected output: program terminates
-Quit
-
-//TC-26
-// Tests Requirements R3, R13
-// short form quit command
-// expected output: program terminates
-Q
-
 // TC-
 // Tests Requirements: R3, NR3
 // long form grade command, long form teacher option
@@ -253,7 +241,7 @@ E
 
 
 
-/*ANALYTICS SECTION*/
+//ANALYTICS SECTION
 
 // TC -
 // Test Requirements: R5
@@ -275,7 +263,7 @@ advanced
 // Test Requirements: R5
 // function: (1) get average gpa of grade
 // command grade, grade number existing
-// expected output: 2.946....
+// expected output: 2.94
 Grade 2
 
 // TC -
@@ -289,8 +277,8 @@ Grade 9
 // Test Requirements: R5
 // function: (1) get average gpa of teacher
 // command teacher, teacher last name existing
-// expected output: 3.0142857142857147
-Teacher FARFARD
+// expected output: 3.01
+Teacher FAFARD
 
 // TC -
 // Test Requirements: R5
@@ -303,7 +291,7 @@ Teacher VONDOLLEN
 // Test Requirements: R5
 // function: (1) get average gpa of bus routes
 // command bus, bus number existing
-// expected output: 2.885
+// expected output: 2.88
 Bus 52
 
 // TC -
@@ -433,3 +421,15 @@ ALL
 //
 // Search:
 EXIT
+
+//TC-25
+// Tests Requirements R3, R13
+// long form quit command
+// expected output: program terminates
+Quit
+
+//TC-26
+// Tests Requirements R3, R13
+// short form quit command
+// expected output: program terminates
+Q

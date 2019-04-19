@@ -3,57 +3,56 @@ import sys
 import numpy as np
 
 # pass input into switch
-def get_user_input(students_table, teachers_table):
+def get_user_input(table):
     response = input("Search: ").lower().split();
-    switch(response, students_table, teachers_table);
+    switch(response, table);
 
 # switch statement because they don't have one
-def switch(input, students_table, teachers_table):
-    table = students_table.merge(teachers_table)
+def switch(input, table):
+
     if (len(input) > 3 or len(input) < 1):
         print ("Usage: F[lag]: <input> [F[lag]]");
     elif (input[0] == "s" or input[0] == "student"):
         if (len(input) == 3 and (input[2] == "b" or input[2]=="bus")):
-            student(input[1], True, students_table);
+            student(input[1], True, table);
         else:
             student(input[1],False, table);
     elif (input[0] == "g" or input[0]=="grade"):
-        if (len(input) == 4):
-            if (input[3] == "h" or input[3]=="high"):
-                grade(int(input[1]), "h",students_table);
-            elif (input[3] == 'l' or input[3] == "low"):
-                grade(int(input[1]),'l',students_table);
-        else:
-            if(input[2] == 's' or input[2] == 'students'):
-                grade(int(input[1]),"none", students_table, teachers_table)
+        if (len(input) == 3):
+            if (input[2] == "h" or input[2]=="high"):
+                grade(int(input[1]), "h",table);
+            elif (input[2] == 'l' or input[2] == "low"):
+                grade(int(input[1]),'l',table);
+            elif(input[2] == 's' or input[2] == 'students'):
+                grade(int(input[1]),"none",table)
             elif(input[2] == 't' or input[2] == 'teachers'):
-                grade(int(input[1]), "none", students_table, teachers_table, True)
+                grade(int(input[1]), "none", table, True)
     elif ((input[0] == "t" or input[0] == "teacher")):
         teacher(input[1], table);
     elif ((input[0] == "b" or input[0]=="bus")):
-        bus(int(input[1]),students_table);
+        bus(int(input[1]),table);
     elif (input[0] == 'a' or input[0]=="average"):
-        average(int(input[1]),students_table);
+        average(int(input[1]),table);
     elif (input[0]=='i' or input[0]=="info"):
-        info(students_table);
+        info(table);
     elif (input[0]=='c' or input[0]=="class"):
         if (len(input) == 3):
             if (input[2]=="s" or input[2]=="student"):
-                classroom(int(input[1]), 's', students_table);
+                classroom(int(input[1]), 's', table);
             elif (input[2]=="t" or input[2]=="teacher"):
-                classroom(int(input[2]), 't', students_table, teachers_table);
+                classroom(int(input[2]), 't', table);
         else:
             print ("Usage: F[lag]: <input> [F[lag]]");
     elif (input[0]=='e' or input[0]=="enrollment"):
-        enrollment(students_table)
+        enrollment(table)
     elif (input[0]=="advanced"):
         print("\n***ADVANCED SEARCH***\n");
         print("Usage (case sensitive):");
         print("1. Grade|Teacher|Bus <grade |Teacher last name | bus route>\n   Get the Average GPA by specified Grade, Teacher or Bus Route")
-        print("2. Grade|Teacher|Bus ALL SORT\n   Get Average GPAs of each Grade, Teacher or Bus sorted descendingly by GPA or by category by default");
+        print("2. Grade|Teacher|Bus ALL SORT\n   Get Average GPAs of each Grade, Teacher or Bus sorted descendingly by GPA or by default (category)");
         print("3. ALL \n   Get all GPAs sorted descendingly");
         print("4. EXIT\n   Return to regular commands\n");
-        get_advanced_input(students_table, teachers_table);
+        get_advanced_input(table);
     elif (input[0] == 'q' or input[0] == 'quit'):
         sys.exit();
     else :
@@ -62,7 +61,7 @@ def switch(input, students_table, teachers_table):
     print("")
 
     # reprompt until quit
-    get_user_input(students_table, teachers_table);
+    get_user_input(table);
 
 
 # String, boolean ->
@@ -112,24 +111,24 @@ def bus(route, students_table):
 # student in the given grade level is printed.  If "high" is set, information of
 # student with highest GPA of given grade level is printed.  If "low" is set,
 # information of student with lowest GPA of grade is printed.
-def grade(level, h_l, student_table, teacher_table, teacher=False):
+def grade(level, h_l, student_table, teacher=False):
     student_list = student_table.loc[student_table["Grade"] == level]
     if (student_list.empty):
         print("Grade Not Found");
         return;
     if(teacher):
         class_list = student_list.Classroom.unique()
-        teacher_list = teacher_table.loc[teacher_table["Classroom"].isin(class_list)]
-        print(teacher_list[["TLastName", "TFirstName"]])
+        teacher_list = student_table.loc[student_table["Classroom"].isin(class_list)]
+        print(teacher_list[["TLastName", "TFirstName"]].drop_duplicates(subset=None, keep='first'))
     else:
         if(h_l == "none"):
-            print(given_list[["StLastName", "StFirstName"]])
+            print(student_list[["StLastName", "StFirstName"]])
         else:
-            if(option == "l"):
+            if(h_l == "l"):
                 student = student_table.iloc[student_list['GPA'].idxmin()]
-            elif(option == "h"):
+            elif(h_l == "h"):
                 student = student_table.iloc[student_list['GPA'].idxmax()]
-            print(student)
+            print(pd.DataFrame(student).T)
 
 # given a grade level, takes all of the GPAs for that grade and prints the average
 def average(grade, students_table):
@@ -138,7 +137,7 @@ def average(grade, students_table):
         print("Grade not found");
         return;
     #print('{}, {}'.format(grade, round(GPA_list.sum().get(0)/GPA_list.size, 2)))
-    print(GPA_list.mean()[0])
+    print(round(GPA_list.mean()[0],2))
 
 # ->
 # prints each grade level and corresponding number of students in the grade level
@@ -178,13 +177,11 @@ def enrollment(students_table):
 ''' ANALYTICS PART '''
 
 # pass analytics input into switch
-def get_advanced_input(students_table, teachers_table):
+def get_advanced_input(table):
     response = input("Advanced Search: ").split();
-    advanced_switch(response, students_table, teachers_table);
+    advanced_switch(response, table);
 
-def advanced_switch(response, students_table, teachers_table):
-    # merged the two tables
-    table = students_table.merge(teachers_table)
+def advanced_switch(response, table):
 
     if (len(response) > 4 or len(response) < 1):
         print ("invalid commands");
@@ -192,10 +189,15 @@ def advanced_switch(response, students_table, teachers_table):
     elif (len(response) == 1):
         if (response[0] == "EXIT"):
             print("\n *** LEAVING ADVANCED SEARCH ***\n");
-            get_user_input(students_table, teachers_table);
-
+            get_user_input(table);
+        elif(response[0]=="exit"):
+            print("Advanced Search is Case Sensitive, try again!");
+            get_advanced_input(table);
         elif (response[0]=="ALL"):
             overallGPA(table);
+        if (response[0]=="all"):
+            print("Advanced Search is Case Sensitive, try again!");
+            get_advanced_input(table);
     # handle options 1 and 2
     elif (len(response) == 2 ):
         if (response[1]=="ALL"):
@@ -210,7 +212,7 @@ def advanced_switch(response, students_table, teachers_table):
         print("invalid input!");
 
     # reprompt until quit
-    get_advanced_input(students_table, teachers_table);
+    get_advanced_input(table);
 
 
 
@@ -232,7 +234,7 @@ def averageBy(column, input, table):
         return;
 
     #print('{}, {}'.format(grade, round(GPA_list.sum().get(0)/GPA_list.size, 2)))
-    print(GPA_list.mean()[0])
+    print(round(GPA_list.mean()[0], 2))
 
 
 # return the average gpa of all grades, teachers OR bus routes
@@ -269,6 +271,9 @@ def main():
     teacher_cols =["TLastName", "TFirstName", "Classroom"];
     teachers_table = pd.read_csv(file, sep=",",header=None, names=teacher_cols)
 
+    # merged the two tables
+    table = students_table.merge(teachers_table)
+
     # new commands:
     # C[lass] <class #> S[tudent]|T[eacher]
     # G[rade] <grade #> [S[tudent] [[H]igh|[L]ow]]|T[eacher]
@@ -276,7 +281,7 @@ def main():
     # prompt function
     print("\n***STUDENT SEARCH PROGRAM***\n")
     print("\nUsage: \n see project spec \n <advanced> for advanced search for analytics\n")
-    get_user_input(students_table, teachers_table);
+    get_user_input(table);
 
 if __name__== "__main__":
   main()
