@@ -9,14 +9,14 @@ def get_user_input(students_table, teachers_table):
 
 # switch statement because they don't have one
 def switch(input, students_table, teachers_table):
-
+    table = students_table.merge(teachers_table)
     if (len(input) > 3 or len(input) < 1):
         print ("Usage: F[lag]: <input> [F[lag]]");
     elif (input[0] == "s" or input[0] == "student"):
         if (len(input) == 3 and (input[2] == "b" or input[2]=="bus")):
             student(input[1], True, students_table);
         else:
-            student(input[1],False, students_table);
+            student(input[1],False, table);
     elif (input[0] == "g" or input[0]=="grade"):
         if (len(input) == 4):
             if (input[3] == "h" or input[3]=="high"):
@@ -29,7 +29,7 @@ def switch(input, students_table, teachers_table):
             elif(input[2] == 't' or input[2] == 'teachers'):
                 grade(int(input[1]), "none", students_table, teachers_table, True)
     elif ((input[0] == "t" or input[0] == "teacher")):
-        teacher(input[1],students_table);
+        teacher(input[1], table);
     elif ((input[0] == "b" or input[0]=="bus")):
         bus(int(input[1]),students_table);
     elif (input[0] == 'a' or input[0]=="average"):
@@ -78,7 +78,7 @@ def student(lastname, bus, students_table):
     if(bus):
         print(student_list[["StLastName", "StFirstName","Bus"]])
     else:
-        print(student_list[["StLastName", "StFirstName", "Grade", "Classroom"]])
+        print(student_list[["StLastName", "StFirstName", "Grade", "Classroom", "TLastName", "TFirstName"]])
 
 
 # Search entries by teacher last name

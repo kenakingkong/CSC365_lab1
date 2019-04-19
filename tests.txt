@@ -95,7 +95,13 @@ B 1
 // Tests Requirements: R3, R7
 // short form command name, existing grade
 // expected output: "SAELEE, DANILO\nGARTH, JOHN"
-G 1
+G 1 students
+
+// TC-14
+// Tests Requirements: R3, R7
+// short form command name, existing grade, short form option
+// expected output: "SAELEE, DANILO\nGARTH, JOHN"
+G 1 s
 
 // TC-14
 // Tests Requirements: R3, R7
